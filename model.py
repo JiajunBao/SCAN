@@ -203,10 +203,10 @@ def func_attention(query, context, opt, smooth, eps=1e-8):
         attn = nn.LeakyReLU(0.1)(attn)
         attn = l2norm(attn, 2)
     elif opt.raw_feature_norm == "l1norm":
-        attn = l1norm_d(attn, 2)
+        attn = l1norm(attn, 2)
     elif opt.raw_feature_norm == "clipped_l1norm":
         attn = nn.LeakyReLU(0.1)(attn)
-        attn = l1norm_d(attn, 2)
+        attn = l1norm(attn, 2)
     elif opt.raw_feature_norm == "clipped":
         attn = nn.LeakyReLU(0.1)(attn)
     elif opt.raw_feature_norm == "no_norm":
@@ -349,7 +349,7 @@ class ContrastiveLoss(nn.Module):
         elif self.opt.cross_attn == 'i2t':
             scores = xattn_score_i2t(im, s, s_l, self.opt)
         else:
-            raise ValueError("unknown first norm type:", opt.raw_feature_norm)
+            raise ValueError("unknown first norm type:", self.opt.raw_feature_norm)
         diagonal = scores.diag().view(im.size(0), 1)
         d1 = diagonal.expand_as(scores)
         d2 = diagonal.t().expand_as(scores)
