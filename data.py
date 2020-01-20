@@ -54,8 +54,10 @@ class PrecompDataset(data.Dataset):
         vocab = self.vocab
 
         # Convert caption (string) to word ids.
+        # tokens = nltk.tokenize.word_tokenize(
+        #     str(caption).lower().decode('utf-8'))  # python2.7
         tokens = nltk.tokenize.word_tokenize(
-            str(caption).lower().decode('utf-8'))
+            str(caption).lower())  # python3.6
         caption = []
         caption.append(vocab('<start>'))
         caption.extend([vocab(token) for token in tokens])
