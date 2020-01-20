@@ -166,7 +166,7 @@ class EncoderText(nn.Module):
         cap_emb, cap_len = padded
 
         if self.use_bi_gru:
-            cap_emb = (cap_emb[:,:,:cap_emb.size(2)/2] + cap_emb[:,:,cap_emb.size(2)/2:])/2
+            cap_emb = (cap_emb[:,:,:cap_emb.size(2) // 2] + cap_emb[:,:,cap_emb.size(2) // 2:]) // 2
 
         # normalization in the joint embedding space
         if not self.no_txtnorm:
